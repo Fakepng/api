@@ -64,7 +64,7 @@ app.post('/login', async (req, res) => {
 
 
 app.get('/api', middleware, async (req, res) => {
-    res.json({ token: req.token });
+    res.json({ message: "welcome user", token: req.token });
 });
 
 app.listen(PORT, () => {
