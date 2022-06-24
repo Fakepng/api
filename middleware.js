@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const userDB = require('./models/user');
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const middleware = async (req, res, next) => {
     const authHeader = req.headers['authorization']
@@ -8,7 +9,7 @@ const middleware = async (req, res, next) => {
     try {
         const token = authHeader.split(' ')[1]
         try {
-            const alive = jwt.verify(token, 'secret');
+            const alive = jwt.verify(token, JWT_SECRET);
         } catch (err) {
             return res.status(403).send("authentication required");
         }
@@ -18,7 +19,7 @@ const middleware = async (req, res, next) => {
         const newToken = jwt.sign({
             username,
             role: 'user'
-        }, 'secret', {
+        }, JWT_SECRET, {
             expiresIn: '1h'
         });
         await userDB.updateOne({ username }, { token: newToken });

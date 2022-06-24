@@ -11,6 +11,7 @@ const middleware = require('./middleware');
 const PORT = process.env.PORT || 5050;
 const CLIENT = process.env.CLIENT || '*';
 const DATABASE = process.env.DATABASE;
+const JWT_SECRET = process.env.JWT_SECRET;
 
 const corsOptions ={
     origin: CLIENT, 
@@ -36,7 +37,7 @@ app.post('/create', async (req, res) => {
         const token = jwt.sign({
             username,
             role: 'user'
-        }, 'secret', {
+        }, JWT_SECRET, {
             expiresIn: '1h'
         });
         await userDB.create({ username, token })
@@ -52,7 +53,7 @@ app.post('/login', async (req, res) => {
         const token = jwt.sign({
             username,
             role: 'user'
-        }, 'secret', {
+        }, JWT_SECRET, {
             expiresIn: '1h'
         });
         await userDB.updateOne({ username }, { token });
