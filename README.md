@@ -4,7 +4,7 @@
 
 ## Step 0: Create a new user once only
 
-> https://bestapi.fakepng.com/create
+> https://bestapi.fakepng.com/create (POST request)
 
 body json
 
@@ -24,7 +24,7 @@ result is
 
 ## Step 1: Login with your name
 
-> https://bestapi.fakepng.com/login
+> https://bestapi.fakepng.com/login (POST request)
 
 body json
 
@@ -44,7 +44,7 @@ result is
 
 ## Step 2: Using your token
 
-> https://bestapi.fakepng.com/api
+> https://bestapi.fakepng.com/api (GET request)
 
 auth with bearer token
 
