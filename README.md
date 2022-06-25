@@ -1,4 +1,4 @@
-# Rolling jwt (version 0)
+# Rolling jwt (version 1)
 
 > Api with middleware and Rolling jwt
 

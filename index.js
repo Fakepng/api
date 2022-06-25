@@ -11,7 +11,8 @@ const middleware = require("./middleware");
 const PORT = process.env.PORT || 5050;
 const CLIENT = process.env.CLIENT || "*";
 const DATABASE = process.env.DATABASE;
-const JWT_SECRET = process.env.JWT_SECRET;
+const RSA_PRIVATE_KEY = process.env.RSA_PRIVATE_KEY.replace(/\\n/g, '\n');
+const RSA_PUBLIC_KEY = process.env.RSA_PUBLIC_KEY.replace(/\\n/g, '\n');
 
 const corsOptions = {
   origin: CLIENT,
@@ -53,8 +54,10 @@ app.post("/create", async (req, res) => {
         username,
         role: "user",
       },
-      JWT_SECRET,
+      RSA_PRIVATE_KEY,
       {
+        algorithm: "RS256",
+        issuer: "Fakepng",
         expiresIn: "1h",
       }
     );
@@ -73,8 +76,10 @@ app.post("/login", async (req, res) => {
         username,
         role: "user",
       },
-      JWT_SECRET,
+      RSA_PRIVATE_KEY,
       {
+        algorithm: "RS256",
+        issuer: "Fakepng",
         expiresIn: "1h",
       }
     );
@@ -86,7 +91,7 @@ app.post("/login", async (req, res) => {
 });
 
 app.get("/api", middleware, async (req, res) => {
-  res.json({ message: "welcome user", token: req.token });
+  res.json({ message: `Welcome ${req.username}`, token: req.token });
 });
 
 app.listen(PORT, () => {
